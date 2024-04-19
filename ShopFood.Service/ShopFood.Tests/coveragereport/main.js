@@ -224,10 +224,12 @@ var assemblies = [
   {
     "name": "ShopFood.API",
     "classes": [
-      { "name": "Program", "rp": "ShopFood.API_Program.html", "cl": 0, "ucl": 16, "cal": 16, "tl": 30, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
-      { "name": "ShopFood.API.App_Start.JwtConfig", "rp": "ShopFood.API_JwtConfig.html", "cl": 0, "ucl": 26, "cal": 26, "tl": 45, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "ShopFood.API.Controllers.WeatherForecastController", "rp": "ShopFood.API_WeatherForecastController.html", "cl": 0, "ucl": 17, "cal": 17, "tl": 33, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "ShopFood.API.WeatherForecast", "rp": "ShopFood.API_WeatherForecast.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 13, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "Program", "rp": "ShopFood.API_Program.html", "cl": 0, "ucl": 18, "cal": 18, "tl": 35, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.API.App_Start.DIConfig", "rp": "ShopFood.API_DIConfig.html", "cl": 0, "ucl": 12, "cal": 12, "tl": 41, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.API.App_Start.JwtConfig", "rp": "ShopFood.API_JwtConfig.html", "cl": 0, "ucl": 25, "cal": 25, "tl": 44, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.API.Controllers.BaseController", "rp": "ShopFood.API_BaseController.html", "cl": 0, "ucl": 10, "cal": 10, "tl": 31, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.API.Controllers.v1.SecurityController", "rp": "ShopFood.API_SecurityController.html", "cl": 0, "ucl": 10, "cal": 10, "tl": 39, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 2, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.API.Middlewares.ExceptionMiddleware", "rp": "ShopFood.API_ExceptionMiddleware.html", "cl": 0, "ucl": 39, "cal": 39, "tl": 97, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
     ]},
   {
     "name": "ShopFood.Application",
@@ -239,15 +241,20 @@ var assemblies = [
     "name": "ShopFood.Domain",
     "classes": [
       { "name": "ShopFood.Domain.DTOs.Requests.LoginRequest", "rp": "ShopFood.Domain_LoginRequest.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 14, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.Domain.DTOs.Results.HttpErrorResponse", "rp": "ShopFood.Domain_HttpErrorResponse.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 19, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.Domain.DTOs.Results.HttpResponse<T>", "rp": "ShopFood.Domain_HttpResponse_1.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 33, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "ShopFood.Domain.DTOs.Results.RolDto", "rp": "ShopFood.Domain_RolDto.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 17, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "ShopFood.Domain.DTOs.Results.UserAuthenticationResultDto", "rp": "ShopFood.Domain_UserAuthenticationResultDto.html", "cl": 1, "ucl": 4, "cal": 5, "tl": 17, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "ShopFood.Domain.Entities.Role", "rp": "ShopFood.Domain_Role.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 19, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
-      { "name": "ShopFood.Domain.Entities.User", "rp": "ShopFood.Domain_User.html", "cl": 6, "ucl": 0, "cal": 6, "tl": 19, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.Domain.Entities.User", "rp": "ShopFood.Domain_User.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 13, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
       { "name": "ShopFood.Domain.Helpers.PasswordHelper", "rp": "ShopFood.Domain_PasswordHelper.html", "cl": 28, "ucl": 0, "cal": 28, "tl": 48, "ct": "LineCoverage", "mc": "-", "cb": 10, "tb": 16, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.Domain.Utils.Logger.ShopFoodLogger<T>", "rp": "ShopFood.Domain_ShopFoodLogger_1.html", "cl": 0, "ucl": 12, "cal": 12, "tl": 55, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.Domain.Variables.ServiceMessages", "rp": "ShopFood.Domain_ServiceMessages.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 12, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
     ]},
   {
     "name": "ShopFood.Infraestructure",
     "classes": [
+      { "name": "ShopFood.Infraestructure.DbContext", "rp": "ShopFood.Infraestructure_DbContext.html", "cl": 0, "ucl": 21, "cal": 21, "tl": 43, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
+      { "name": "ShopFood.Infraestructure.Repositories.UserRepository", "rp": "ShopFood.Infraestructure_UserRepository.html", "cl": 0, "ucl": 12, "cal": 12, "tl": 39, "ct": "LineCoverage", "mc": "-", "cb": 0, "tb": 0, "lch": [], "bch": [], "hc": [] },
     ]},
 ];
 

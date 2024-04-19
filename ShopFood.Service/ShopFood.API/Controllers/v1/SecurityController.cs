@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShopFood.Domain.DTOs.Requests;
 using ShopFood.Domain.DTOs.Results;
 using ShopFood.Domain.Interfaces.Application.Implements;
@@ -22,6 +23,7 @@ namespace ShopFood.API.Controllers.v1
         #region Public
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Login")]
         [ProducesResponseType(typeof(HttpResponse<UserAuthenticationResultDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(HttpResponse<UserAuthenticationResultDto>), (int)HttpStatusCode.Unauthorized)]

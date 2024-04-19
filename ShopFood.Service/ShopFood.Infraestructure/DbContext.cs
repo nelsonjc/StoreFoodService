@@ -25,19 +25,21 @@ namespace ShopFood.Infraestructure
             return db.Query<T>(query).FirstOrDefault();
         }
 
-
-        public IEnumerable<T> ExecuteQuery<T>(string sql, object parameters = null)
+        protected async Task<IEnumerable<T>> ExecuteQuery<T>(string sql, object parameters = null)
         {
             using var connection = CreateConnection();
-            connection.Open();
-            return connection.Query<T>(sql, parameters);
+            await connection.OpenAsync();
+            var result = await connection.QueryAsync<T>(sql, parameters);
+            await connection.CloseAsync();
+            return result;
         }
 
-        public int ExecuteCommand(string sql, object parameters = null)
+        protected async Task ExecuteCommand(string sql, object parameters = null)
         {
             using var connection = CreateConnection();
-            connection.Open();
-            return connection.Execute(sql, parameters);
+            await connection.OpenAsync();
+            await connection.ExecuteAsync(sql, parameters);
+            await connection.CloseAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ShopFood.Domain.DTOs.Requests;
 using ShopFood.Domain.DTOs.Results;
@@ -14,12 +15,14 @@ namespace ShopFood.Application.Implements
 {
     public class SecurityBL : ISecurityBL
     {
+        private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHelper _passwordHelper;
         private readonly IConfiguration _configuration;
 
-        public SecurityBL(IUserRepository userRepository, IPasswordHelper passwordHelper, IConfiguration configuration)
+        public SecurityBL(IMapper mapper, IUserRepository userRepository, IPasswordHelper passwordHelper, IConfiguration configuration)
         {
+            _mapper = mapper;
             _userRepository = userRepository;
             _passwordHelper = passwordHelper;
             _configuration = configuration;
@@ -31,8 +34,9 @@ namespace ShopFood.Application.Implements
             if (user == null || !_passwordHelper.VerifyPasswordHash(model.Password, user.PasswordHash, user.PasswordSalt))
                 return null; // Autenticación fallida
 
-            var token = GenerateJwtToken(user);
-            return new UserAuthenticationResultDto { Token = token };
+            UserAuthenticationResultDto userAutheticated = _mapper.Map<UserAuthenticationResultDto>(user);
+            userAutheticated.Token = GenerateJwtToken(user);
+            return userAutheticated;
         }
 
         private string GenerateJwtToken(User user)
@@ -40,6 +44,10 @@ namespace ShopFood.Application.Implements
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtSettings = _configuration.GetSection("Jwt");
             var secret = jwtSettings["Secret"];
+            var audience = jwtSettings["Audience"];
+            var issuer = jwtSettings["Issuer"];
+
+
             var expirationInMinutes = jwtSettings["ExpirationInMinutes"];
 
             var key = Encoding.ASCII.GetBytes(secret);
@@ -48,9 +56,12 @@ namespace ShopFood.Application.Implements
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
-            }),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Role, user.RoleName)
+                }),
+                Audience = audience,
+                Issuer = issuer,
                 Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(expirationInMinutes)),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

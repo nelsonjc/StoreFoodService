@@ -6,6 +6,7 @@ namespace ShopFood.API.Controllers
 {
     [Produces("application/json")]
     [ApiController]
+    [Route("api/v1/[controller]")]
     public class BaseController : ControllerBase
     {
         /// <summary>

@@ -13,32 +13,44 @@ namespace ShopFood.API.App_Start
         /// <returns></returns>
         internal static IServiceCollection AddJwtConfig(this IServiceCollection services, IConfiguration configuration)
         {
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.SaveToken = true;
+                x.RequireHttpsMetadata = false;
+                x.TokenValidationParameters = GetTokenValidationParameters(configuration);
+            });
+            return services;
+        }
+
+        /// <summary>
+        /// Get token validation parameters
+        /// </summary>
+        /// <param name="secretkey">string</param>
+        /// <returns></returns>
+        internal static TokenValidationParameters GetTokenValidationParameters(IConfiguration configuration)
+        {
             var jwtSettings = configuration.GetSection("Jwt");
             var secret = jwtSettings["Secret"];
             var issuer = jwtSettings["Issuer"];
             var audience = jwtSettings["Audience"];
-
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options =>
-                    {
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = key,
-                            ValidateIssuer = true,
-                            ValidIssuer = issuer,
-                            ValidateAudience = true,
-                            ValidAudience = audience,
-                            ValidateLifetime = true,
-                            ClockSkew = TimeSpan.Zero,
-                            RequireExpirationTime = true,
-                        };
-                    });
-
-            services.AddAuthorization();
-            return services;
+            return new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = issuer,
+                ValidAudience = audience,
+                IssuerSigningKey = key,
+            };
         }
     }
 }

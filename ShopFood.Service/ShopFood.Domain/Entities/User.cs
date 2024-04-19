@@ -9,5 +9,6 @@
         public string PasswordSalt { get; set; }
         public Guid RoleId { get; set; }
         public string RoleName { get; set; }
+        public bool Active { get; set; }
     }
 }

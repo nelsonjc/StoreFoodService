@@ -9,31 +9,33 @@ namespace ShopFood.Infraestructure.Repositories
 
         public UserRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await this.GetAsyncFirst<User?>($"EXEC [dbo].[SP_User_Delete] '{id}'");
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await this.ExecuteQuery<User>($"EXEC [dbo].[SP_User_GetAll]");            
         }
 
-        public User GetById(int id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await this.GetAsyncFirst<User>($"EXEC [dbo].[SP_User_GetBy_Id] '{id}'");
         }
 
         public async Task<User?> GetUserByUsernameAsync(string userName) => await this.GetAsyncFirst<User?>($"EXEC [dbo].[SP_User_GetBy_UserName] '{userName}'");
 
-        public void Insert(User entity)
+        public async Task InsertAsync(User entity)
         {
-            throw new NotImplementedException();
+            var parameters = new { Name = entity.Name, UserName = entity.Username, PasswordHash = entity.PasswordHash, PasswordSalt = entity.PasswordSalt, IdRole = entity.RoleId };
+            await this.ExecuteCommand("[dbo].[SP_User_Insert]", parameters);
         }
 
-        public void Update(User entity)
+        public async Task UpdateAsync(User entity)
         {
-            throw new NotImplementedException();
+            var parameters = new { IdUser = entity.Id, Name = entity.Name, UserName = entity.Username, IdRole = entity.RoleId, Active = entity.Active };
+            await this.ExecuteCommand($"[dbo].[SP_User_Update]", parameters);            
         }
     }
 }

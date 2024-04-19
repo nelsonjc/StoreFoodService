@@ -5,31 +5,36 @@ using ShopFood.API.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration Configuration = builder.Configuration.AddJsonFile("appsettings.json").Build();
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); 
-builder.Services.AddJwtConfig(Configuration);
 builder.Services.AddDIConfig();
-
-
+builder.Services.AddJwtConfig(Configuration);
+builder.Services.AddSwaggerConfig();
+builder.Services.AddAutoMapperConfig();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+app.UseAuthentication();
+
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseSwaggerConfig();
+
+app.UseCors();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();

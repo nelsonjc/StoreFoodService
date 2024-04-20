@@ -30,21 +30,21 @@ namespace ShopFood.Infraestructure.Repositories
         /// Method to get all users
         /// </summary>
         /// <returns>List of User result</returns>
-        public async Task<IEnumerable<User>> GetAllAsync() => await ExecuteQuery<User>($"{SP.EXEC} {SP.User_GetAll}");
+        public async Task<IEnumerable<User?>> GetAllAsync() => await ExecuteQuery<User>($"{SP.EXEC} {SP.User_GetAll}");
 
         /// <summary>
         /// Method to get a user by id
         /// </summary>
         /// <param name="id">Parameter to identify the user to get</param>
         /// <returns>User Data Info Result</returns>
-        public async Task<User> GetByIdAsync(Guid id) => await GetAsyncFirst<User>($"{SP.EXEC} {SP.User_GetBy_Id} '{id}'");
+        public async Task<User?> GetByIdAsync(Guid id) => await GetAsyncFirst<User>($"{SP.EXEC} {SP.User_GetBy_Id} '{id}'");
 
         /// <summary>
         /// Method to get user by user name
         /// </summary>
         /// <param name="userName">Parameter to identify a user by username</param>
         /// <returns>A User Data Info Result</returns>
-        public async Task<User> GetUserByUsernameAsync(string userName) => await GetAsyncFirst<User>($"{SP.EXEC} {SP.User_GetBy_UserName} '{userName}'");
+        public async Task<User?> GetUserByUsernameAsync(string userName) => await GetAsyncFirst<User>($"{SP.EXEC} {SP.User_GetBy_UserName} '{userName}'");
 
         /// <summary>
         /// Method to create a user
@@ -62,6 +62,23 @@ namespace ShopFood.Infraestructure.Repositories
             };
 
             await ExecuteCommand(SP.User_Insert, parameters);
+        }
+
+        /// <summary>
+        /// Method to create a user with customer role
+        /// </summary>
+        /// <param name="entity">Parameter with user information to create</param>
+        public async Task InsertCustomerAsync(User entity)
+        {
+            var parameters = new
+            {
+                Name = entity.Name,
+                UserName = entity.Username,
+                PasswordHash = entity.PasswordHash,
+                PasswordSalt = entity.PasswordSalt
+            };
+
+            await ExecuteCommand(SP.User_CustomerInsert, parameters);
         }
 
         /// <summary>

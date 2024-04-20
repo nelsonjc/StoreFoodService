@@ -1,8 +1,10 @@
-﻿using Dapper;
+﻿using Azure.Core;
+using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using ShopFood.Domain.DTOs.Requests;
 using ShopFood.Domain.Entities;
+using ShopFood.Domain.Interfaces;
 using ShopFood.Domain.Interfaces.Repository;
 using System.Text.Json;
 using SP = ShopFood.Domain.Variables.StoreProcedures;
@@ -33,6 +35,43 @@ namespace ShopFood.Infraestructure.Repositories
         }
 
         /// <summary>
+        /// TODO: Method pending to implement
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task DeleteAsync(Guid id) => throw new NotImplementedException();
+
+        /// <summary>
+        /// Method to get all food order
+        /// </summary>
+        /// <returns>A List of FoodOrder Head</returns>
+        public async Task<IEnumerable<FoodOrderHead?>> GetAllAsync() => await ExecuteQuery<FoodOrderHead>($"{SP.EXEC} {SP.SP_FoodOrder_GetAll}");
+
+        /// <summary>
+        /// Method to get a food order by id
+        /// </summary>
+        /// <param name="id">Parameter to identify the fodd order to get</param>
+        /// <returns>A FoodOrder Head with details</returns>
+        public async Task<FoodOrderHead?> GetByIdAsync(Guid id)
+        {
+            using var conn = new SqlConnection(_connectionString);
+
+            var parameters = new { FoodOrderId = id };
+
+            var resultCommand = await conn.QueryMultipleAsync(SP.SP_FoodOrder_GetBy_Id, parameters);
+            var result = resultCommand.Read<FoodOrderHead>().FirstOrDefault();
+
+            if (result != null)
+                result.Details = resultCommand.Read<FoodOrderDetail>().ToList();
+
+            await conn.CloseAsync();
+            await conn.DisposeAsync();
+
+            return result;
+        }
+
+        /// <summary>
         /// Method to create a Food Order with multiple food details
         /// </summary>
         /// <param name="request">Parameter with request date of food order type of FoodOrderRequest</param>
@@ -52,12 +91,29 @@ namespace ShopFood.Infraestructure.Repositories
             var result = resultCommand.Read<FoodOrderHead>().FirstOrDefault();
 
             if (result != null)
-                result.FoodOrderDetails = resultCommand.Read<FoodOrderDetail>().ToList();
+                result.Details = resultCommand.Read<FoodOrderDetail>().ToList();
 
             await conn.CloseAsync();
             await conn.DisposeAsync();
             return result;
-        } 
+        }
+
+        /// <summary>
+        /// TODO: Method pending to implement
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task UpdateAsync(FoodOrderRequest entity) => throw new NotImplementedException();
+
+        /// <summary>
+        /// TODO: Method pending to implement
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        Task IGenericBase<FoodOrderHead, FoodOrderRequest>.InsertAsync(FoodOrderRequest entity) => throw new NotImplementedException();
+        
         #endregion
     }
 }

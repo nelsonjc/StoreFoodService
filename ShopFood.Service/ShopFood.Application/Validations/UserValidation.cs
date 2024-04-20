@@ -30,6 +30,25 @@ namespace ShopFood.Application.Validations
         }
 
         /// <summary>
+        /// Method to User Customer Create Validate
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="Exception"></exception>
+        public static void UserCustomerCreateValidate(UserRequest request)
+        {
+            request.Throw().IfNull(x => x);
+            request.Name.Throw(paramName => throw new Exception($"Param name: {paramName}. String should not be empty or white space only."))
+                .IfEmpty()
+                .IfWhiteSpace();
+            request.Username.Throw(paramName => throw new Exception($"Param name: {paramName}. String should not be empty or white space only."))
+                .IfEmpty()
+                .IfWhiteSpace();
+            request.Password?.Throw(paramName => throw new Exception($"Param name: {paramName}. String should not be empty or white space only."))
+                .IfEmpty()
+                .IfWhiteSpace();
+        }
+
+        /// <summary>
         /// Method to User Update Validate
         /// </summary>
         /// <param name="request"></param>

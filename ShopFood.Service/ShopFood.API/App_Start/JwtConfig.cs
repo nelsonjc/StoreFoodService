@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ShopFood.API.App_Start
 {
+    /// <summary>
+    /// Class to config JWT
+    /// </summary>
     internal static class JwtConfig
     {
         /// <summary>

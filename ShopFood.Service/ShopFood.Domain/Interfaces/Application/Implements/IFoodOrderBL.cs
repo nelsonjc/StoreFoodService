@@ -1,18 +1,13 @@
 ﻿using ShopFood.Domain.DTOs.Requests;
+using ShopFood.Domain.DTOs.Results;
 
 namespace ShopFood.Domain.Interfaces.Application.Implements
 {
     /// <summary>
     /// Interface to Food Order bussiness logic
     /// </summary>
-    public interface IFoodOrderBL
+    public interface IFoodOrderBL : IGenericBase<FoodOrderHeadDto, FoodOrderRequest>
     {
-        /// <summary>
-        /// Method to do a food order
-        /// </summary>
-        /// <param name="request">Parameter type of request data</param>
-        Task InsertAsync(FoodOrderRequest request);
-
         /// <summary>
         /// Method to do confirm a food order
         /// </summary>

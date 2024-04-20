@@ -24,12 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="API\" />
-    <Folder Include="Infraestructura\" />
-    <Folder Include="TestResults\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ShopFood.API\ShopFood.API.csproj" />
     <ProjectReference Include="..\ShopFood.Application\ShopFood.Application.csproj" />
     <ProjectReference Include="..\ShopFood.Domain\ShopFood.Domain.csproj" />

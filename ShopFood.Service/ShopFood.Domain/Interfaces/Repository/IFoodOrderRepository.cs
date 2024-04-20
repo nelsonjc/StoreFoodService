@@ -3,9 +3,12 @@ using ShopFood.Domain.Entities;
 
 namespace ShopFood.Domain.Interfaces.Repository
 {
-    public interface IFoodOrderRepository
+    /// <summary>
+    /// Interface to food ordery data access info
+    /// </summary>
+    public interface IFoodOrderRepository : IGenericBase<FoodOrderHead, FoodOrderRequest>
     {
-        Task<FoodOrderHead> InsertAsync(FoodOrderRequest request);
+        new Task<FoodOrderHead> InsertAsync(FoodOrderRequest request);
         Task ConfirmAsync(Guid id);
     }
 }

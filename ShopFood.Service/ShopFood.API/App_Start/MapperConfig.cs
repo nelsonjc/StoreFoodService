@@ -5,6 +5,9 @@ using ShopFood.Domain.Entities;
 
 namespace ShopFood.API.App_Start
 {
+    /// <summary>
+    /// Class to mapper config
+    /// </summary>
     public static class MapperConfig
     {
         /// <summary>
@@ -33,6 +36,9 @@ namespace ShopFood.API.App_Start
                 CreateMap<FoodCatalog, FoodCatalogDto>();
                 CreateMap<FoodCatalogRequest, FoodCatalog>();
                 CreateMap<FoodCatalog, FoodCatalogCustomerDto>();
+
+                CreateMap<FoodOrderHead, FoodOrderHeadDto>();
+                CreateMap<FoodOrderDetail, FoodOrderDetailDto>();
             }
         }
     }

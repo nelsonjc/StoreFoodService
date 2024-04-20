@@ -10,7 +10,7 @@
         public Guid UserCreatedId { get; set; }
         public string UserCreated { get; set; }
         public DateTime DateCreated { get; set; }
-        public List<FoodOrderDetail> FoodOrderDetails { get; set; }
+        public List<FoodOrderDetail> Details { get; set; }
     }
 
     public class FoodOrderDetail

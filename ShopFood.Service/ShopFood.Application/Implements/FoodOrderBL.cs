@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using ShopFood.Application.Validations;
 using ShopFood.Domain.DTOs.Mail;
 using ShopFood.Domain.DTOs.Requests;
+using ShopFood.Domain.DTOs.Results;
 using ShopFood.Domain.Entities;
 using ShopFood.Domain.Helpers;
 using ShopFood.Domain.Interfaces.Application.Implements;
@@ -18,6 +20,7 @@ namespace ShopFood.Application.Implements
     public class FoodOrderBL : IFoodOrderBL
     {
         #region Variables
+        private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly IFoodOrderRepository _foodOrderRepository;
         private readonly IUserBL _userBL;
@@ -30,8 +33,9 @@ namespace ShopFood.Application.Implements
         /// <param name="configuration">Parameter configuration type of Microsoft.Extensions.Configuration</param>
         /// <param name="foodOrderRepository">Parameter type of Repository to get and set data base</param>
         /// <param name="userBL">Parameter to get and set data of user business logic</param>
-        public FoodOrderBL(IConfiguration configuration, IFoodOrderRepository foodOrderRepository, IUserBL userBL)
+        public FoodOrderBL(IMapper mapper, IConfiguration configuration, IFoodOrderRepository foodOrderRepository, IUserBL userBL)
         {
+            _mapper = mapper;
             _configuration = configuration;
             _foodOrderRepository = foodOrderRepository;
             _userBL = userBL;
@@ -59,6 +63,47 @@ namespace ShopFood.Application.Implements
             await _foodOrderRepository.ConfirmAsync(id);
             return ResourceData.HTMLConfirmOK;
         }
+
+        /// <summary>
+        /// Method to get a food order with details
+        /// </summary>
+        /// <param name="id">Parameter type of Guid to get a food order</param>
+        /// <returns>A fodd order type of FoodOrderHeadDto</returns>
+        public async Task<FoodOrderHeadDto?> GetByIdAsync(Guid id)
+        {
+            var result = await _foodOrderRepository.GetByIdAsync(id);
+            return _mapper.Map<FoodOrderHeadDto>(result);
+        }
+
+        /// <summary>
+        /// Method to get all food orders
+        /// </summary>
+        /// <returns>A lsit of Food Order/returns>
+        public async Task<IEnumerable<FoodOrderHeadDto?>> GetAllAsync()
+        {
+            var result = await _foodOrderRepository.GetAllAsync();
+            if (result != null && result.Count() > 0)
+                return _mapper.Map<IEnumerable<FoodOrderHeadDto>>(result);
+
+            return null;
+        }
+
+        /// <summary>
+        /// TODO: Method pendieng implement
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task UpdateAsync(FoodOrderRequest entity) => throw new NotImplementedException();
+
+        /// <summary>
+        /// TODO: Method pendieng implement
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task DeleteAsync(Guid id) => throw new NotImplementedException();
+
         #endregion
 
         #region Private Methods
@@ -102,7 +147,7 @@ namespace ShopFood.Application.Implements
             decimal totalPayable = 0;
             string strDetailTable = string.Empty;
 
-            foreach (var detail in order.FoodOrderDetails)
+            foreach (var detail in order.Details)
             {
                 string strDetailItem = $"<tr>" +
                     $"<td>{detail.ItemNumber}</td>" +
@@ -174,6 +219,7 @@ namespace ShopFood.Application.Implements
             string baseUrl = _configuration[AppConfig.AppSetting_ApiBaseUrl];
             return $"{baseUrl}{ResourceData.LinkConfirmOrder}{id}";
         }
+
         #endregion
     }
 }

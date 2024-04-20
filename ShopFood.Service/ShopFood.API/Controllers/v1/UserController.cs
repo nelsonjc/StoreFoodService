@@ -39,6 +39,17 @@ namespace ShopFood.API.Controllers.v1
             return await GetResponseAsync(HttpStatusCode.OK, ServiceMessages.OK, true);
         }
 
+        [HttpPost]
+        [Route("CreateCustomer")]
+        [ProducesResponseType(typeof(HttpResponse<bool>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(HttpResponse<bool>), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(HttpErrorResponse), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> CreateCutomer([FromBody] UserRequest request)
+        {
+            await _userBL.InsertCustomerAsync(request);
+            return await GetResponseAsync(HttpStatusCode.OK, ServiceMessages.OK, true);
+        }
+
         [HttpGet]
         [Route("GetAll")]
         [Authorize(Roles = "Administrador")]

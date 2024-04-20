@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShopFood.Application.Implements;
 using ShopFood.Domain.DTOs.Requests;
 using ShopFood.Domain.DTOs.Results;
 using ShopFood.Domain.Interfaces.Application.Implements;
@@ -50,7 +51,36 @@ namespace ShopFood.API.Controllers.v1
         {
             var resultContent = await _foodOrderBL.ConfirmAsync(id);
             return Content(resultContent, AppConfig.HTMLTextFormatting);
-        } 
+        }
+
+        [HttpGet]
+        [Route("GetAll")]
+        [Authorize(Roles = "Administrador")]
+        [ProducesResponseType(typeof(HttpResponse<IEnumerable<FoodOrderHeadDto>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(HttpResponse<IEnumerable<FoodOrderHeadDto>>), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(HttpErrorResponse), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _foodOrderBL.GetAllAsync();
+            if (result != null)
+                return await GetResponseAsync(HttpStatusCode.OK, ServiceMessages.OK, result);
+            return await GetResponseAsync<HttpResponse<IEnumerable<FoodOrderHeadDto>>>(HttpStatusCode.Unauthorized, ServiceMessages.UNAUTHORIZED, null);
+        }
+
+        [HttpGet]
+        [Route("GetById/id")]
+        [Authorize(Roles = "Administrador")]
+        [ProducesResponseType(typeof(HttpResponse<FoodOrderHeadDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(HttpResponse<FoodOrderHeadDto>), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(HttpErrorResponse), (int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _foodOrderBL.GetByIdAsync(id);
+            if (result != null)
+                return await GetResponseAsync(HttpStatusCode.OK, ServiceMessages.OK, result);
+            return await GetResponseAsync<HttpResponse<FoodOrderHeadDto>>(HttpStatusCode.Unauthorized, ServiceMessages.UNAUTHORIZED, null);
+        }
+
         #endregion
     }
 }

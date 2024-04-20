@@ -9,6 +9,9 @@ using ShopFood.Infraestructure.Repositories;
 
 namespace ShopFood.API.App_Start
 {
+    /// <summary>
+    /// Class to config DI
+    /// </summary>
     internal static class DIConfig
     {
         /// <summary>
@@ -21,6 +24,10 @@ namespace ShopFood.API.App_Start
             AddDIBL(services);
         }
 
+        /// <summary>
+        /// Method to add ID repositories
+        /// </summary>
+        /// <param name="services"></param>
         private static void AddDIRepository(IServiceCollection services)
         {
             services.AddScoped(typeof(IShopFoodLogger<>), typeof(ShopFoodLogger<>));
@@ -29,6 +36,10 @@ namespace ShopFood.API.App_Start
             services.AddScoped(typeof(IFoodOrderRepository), typeof(FoodOrderRepository));
         }
 
+        /// <summary>
+        /// Method to add ID business logic
+        /// </summary>
+        /// <param name="services"></param>
         private static void AddDIBL(IServiceCollection services)
         {
             services.AddScoped(typeof(IPasswordHelper), typeof(PasswordHelperWrapper));

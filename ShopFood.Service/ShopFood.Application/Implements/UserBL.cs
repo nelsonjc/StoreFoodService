@@ -84,6 +84,20 @@ namespace ShopFood.Application.Implements
         }
 
         /// <summary>
+        /// Method to create a user whit customer role
+        /// </summary>
+        /// <param name="entity">Parameter with user information to create</param>
+        public async Task InsertCustomerAsync(UserRequest entity)
+        {
+            UserValidation.UserCustomerCreateValidate(entity);
+            var userData = _mapper.Map<User>(entity);
+            string password = _passwordHelper.CreatePasswordHash(entity.Password);
+            userData.PasswordSalt = password.Split(':')[0];
+            userData.PasswordHash = password.Split(':')[1];
+            await _userRepository.InsertCustomerAsync(userData);
+        }
+
+        /// <summary>
         /// Method to update a user
         /// </summary>
         /// <param name="entity">Parameter with user information to update</param>

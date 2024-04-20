@@ -36,7 +36,7 @@ if (!isDevelopment)
 }
 
 var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable(AppConfig.KeyVaultUri));
-builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential(options));
+//builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential(options));
 
 var app = builder.Build();
 

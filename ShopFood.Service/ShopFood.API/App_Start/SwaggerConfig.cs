@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace ShopFood.API.App_Start
 {
+    /// <summary>
+    /// Class to config swagger 
+    /// </summary>
     internal static class SwaggerConfig
     {
         /// <summary>

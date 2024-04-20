@@ -1,15 +1,19 @@
 ﻿using ShopFood.Domain.DTOs.Mail;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ShopFood.Domain.Variables;
+using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopFood.Domain.Helpers
 {
+    /// <summary>
+    /// Class to notifications
+    /// </summary>
     public static class NotificationHelper
     {
+        /// <summary>
+        /// Method to notification with mail
+        /// </summary>
+        /// <param name="mailSend">Parameter to send data mail type of MailSendNotificationDto</param>
         public static async Task SendMail(MailSendNotificationDto mailSend)
         {
             SmtpClient SmtpServer = new(mailSend.Configuration.Host);
@@ -22,18 +26,16 @@ namespace ShopFood.Domain.Helpers
             };
 
             if (mailSend.Destinatary is null || mailSend.Destinatary.Length == 0)
-                throw new Exception("No hay destinatarios para enviar el e-mail");
+                throw new Exception(ServiceMessages.ERROR_MAIL_DESTINY);
 
             mailSend.Destinatary.ToList().ForEach(x => mail.To.Add(x));
 
-            if (mailSend.Attachments != null && mailSend.Attachments.Count() > 0)
-            {
+            if (mailSend.Attachments != null && mailSend.Attachments.Count > 0)
                 mailSend.Attachments.ToList().ForEach(x => mail.Attachments.Add(x));
-            }
 
             SmtpServer.Port = mailSend.Configuration.Port;
             SmtpServer.UseDefaultCredentials = mailSend.Configuration.DefaultCredentials;
-            SmtpServer.Credentials = new System.Net.NetworkCredential(mailSend.Configuration.Remittance, mailSend.Configuration.Password);
+            SmtpServer.Credentials = new NetworkCredential(mailSend.Configuration.Remittance, mailSend.Configuration.Password);
             SmtpServer.EnableSsl = mailSend.Configuration.EnableSSL;
 
             SmtpServer.Send(mail);

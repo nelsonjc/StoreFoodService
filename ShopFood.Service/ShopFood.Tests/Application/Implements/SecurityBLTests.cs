@@ -6,6 +6,8 @@ using ShopFood.Domain.Interfaces.Application.Wrappers;
 using ShopFood.Domain.Interfaces.Repository;
 using ShopFood.Domain.DTOs.Requests;
 using ShopFood.Domain.Interfaces.Application.Implements;
+using AutoMapper;
+using static ShopFood.API.App_Start.MapperConfig;
 
 namespace ShopFood.Tests.Application.Implements
 {
@@ -17,6 +19,10 @@ namespace ShopFood.Tests.Application.Implements
         [SetUp]
         public void Setup()
         {
+
+            var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
+            IMapper mapper = mapperConfig.CreateMapper();
+
             var mockPasswordHelper = new Mock<IPasswordHelper>();
             mockPasswordHelper.Setup(x => x.VerifyPasswordHash("correct_password", "correct_hash", "correct_salt")).Returns(true);
 
@@ -28,7 +34,7 @@ namespace ShopFood.Tests.Application.Implements
                 Username = "juan_perez",
                 PasswordHash = "correct_hash",
                 PasswordSalt = "correct_salt",
-                RoleId = Guid.NewGuid(), 
+                RoleId = Guid.NewGuid(),
                 RoleName = "Administradoe"
             });
 
@@ -36,7 +42,7 @@ namespace ShopFood.Tests.Application.Implements
             mockConfiguration.Setup(x => x.GetSection("Jwt")["Secret"]).Returns(default(Guid).ToString());
             mockConfiguration.Setup(x => x.GetSection("Jwt")["ExpirationInMinutes"]).Returns("60");
 
-            _securityBL = new SecurityBL(mockUserRepository.Object, mockPasswordHelper.Object, mockConfiguration.Object);
+            _securityBL = new SecurityBL(mapper, mockUserRepository.Object, mockPasswordHelper.Object, mockConfiguration.Object);
         }
 
         [Test]

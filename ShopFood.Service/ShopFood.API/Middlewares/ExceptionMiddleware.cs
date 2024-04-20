@@ -63,7 +63,7 @@ namespace ShopFood.API.Middlewares
         /// <returns></returns>
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType = AppConfig.JSONFormatting;
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             await context.Response.WriteAsync(new HttpErrorResponse()
             {
@@ -82,7 +82,7 @@ namespace ShopFood.API.Middlewares
         /// <returns></returns>
         private async Task HandleExceptionAsync(HttpContext context, HttpResponseException exception)
         {
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType = AppConfig.JSONFormatting;
             context.Response.StatusCode = (int)exception.Response.StatusCode;
 
             await context.Response.WriteAsync(new HttpErrorResponse()

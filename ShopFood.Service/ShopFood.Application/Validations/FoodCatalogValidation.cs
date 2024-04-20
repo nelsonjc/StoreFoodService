@@ -3,8 +3,16 @@ using Throw;
 
 namespace ShopFood.Application.Validations
 {
-    public class FoodCatalogValidation
+    /// <summary>
+    /// Class to validate Food Catalog 
+    /// </summary>
+    public static class FoodCatalogValidation
     {
+        /// <summary>
+        /// Method to FoodCatalog Create Validate
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="Exception"></exception>
         public static void FoodCatalogCreateValidate(FoodCatalogRequest request)
         {
             request.Throw().IfNull(x => x);
@@ -23,6 +31,11 @@ namespace ShopFood.Application.Validations
                 .IfEquals(default(Guid));
         }
 
+        /// <summary>
+        /// Method to Food Catalog Update Validate
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="Exception"></exception>
         public static void FoodCatalogUpdateValidate(FoodCatalogRequest request)
         {
             request.Throw().IfNull(x => x);

@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -16,7 +16,9 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5102",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://shopfoodapivault.vault.azure.net/",
+        "AZURE_USERNAME": "nejaramillo2@poligran.edu.co"
       }
     },
     "https": {
@@ -26,7 +28,9 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7128;http://localhost:5102",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://shopfoodapivault.vault.azure.net/",
+        "AZURE_USERNAME": "nejaramillo2@poligran.edu.co"
       }
     },
     "IIS Express": {
@@ -34,7 +38,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://shopfoodapivault.vault.azure.net/",
+        "AZURE_USERNAME": "nejaramillo2@poligran.edu.co"
       }
     }
   }

@@ -13,13 +13,20 @@ namespace ShopFood.API.Controllers.v1
     /// </summary>
     public class UserController : BaseController
     {
+        #region Variables
         private readonly IUserBL _userBL;
 
+        #endregion
+
+        #region Ctor
         public UserController(IUserBL userBL)
         {
             _userBL = userBL;
         }
 
+        #endregion
+
+        #region Controllers
         [HttpPost]
         [Route("Create")]
         [Authorize(Roles = "Administrador")]
@@ -82,6 +89,7 @@ namespace ShopFood.API.Controllers.v1
         {
             await _userBL.DeleteAsync(id);
             return await GetResponseAsync(HttpStatusCode.OK, ServiceMessages.OK, true);
-        }
+        } 
+        #endregion
     }
 }

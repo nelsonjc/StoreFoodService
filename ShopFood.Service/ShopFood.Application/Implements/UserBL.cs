@@ -9,20 +9,43 @@ using ShopFood.Domain.Interfaces.Repository;
 
 namespace ShopFood.Application.Implements
 {
+    /// <summary>
+    /// Class to User Business Logic
+    /// </summary>
     public class UserBL : IUserBL
     {
+        #region Variables
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        private readonly IPasswordHelper _passwordHelper;
+        private readonly IPasswordHelper _passwordHelper; 
+        #endregion
 
+        #region Ctor
+        /// <summary>
+        /// Ctor to User business logic
+        /// </summary>
+        /// <param name="mapper">Parameter mapper type of AutoMapper</param>
+        /// <param name="userRepository">Parameter type of Repository to get and set data base</param>
+        /// <param name="passwordHelper">Parameter type of passwor helper</param>
         public UserBL(IMapper mapper, IUserRepository userRepository, IPasswordHelper passwordHelper)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _passwordHelper = passwordHelper;
-        }
+        } 
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Method to delete a user
+        /// </summary>
+        /// <param name="id">Parameter to identify the user to delete</param>
         public async Task DeleteAsync(Guid id) => await this._userRepository.DeleteAsync(id);
 
+        /// <summary>
+        /// Method to get all users
+        /// </summary>
+        /// <returns>List of User result</returns>
         public async Task<IEnumerable<UserDto>> GetAllAsync()
         {
             var result = await _userRepository.GetAllAsync();
@@ -32,6 +55,11 @@ namespace ShopFood.Application.Implements
             return null;
         }
 
+        /// <summary>
+        /// Method to get a user by id
+        /// </summary>
+        /// <param name="id">Parameter to identify the user to get</param>
+        /// <returns>User Data Info Result</returns>
         public async Task<UserDto> GetByIdAsync(Guid id)
         {
             var result = await _userRepository.GetByIdAsync(id);
@@ -41,6 +69,10 @@ namespace ShopFood.Application.Implements
             return null;
         }
 
+        /// <summary>
+        /// Method to create a user
+        /// </summary>
+        /// <param name="entity">Parameter with user information to create</param>
         public async Task InsertAsync(UserRequest entity)
         {
             UserValidation.UserCreateValidate(entity);
@@ -51,11 +83,16 @@ namespace ShopFood.Application.Implements
             await _userRepository.InsertAsync(userData);
         }
 
+        /// <summary>
+        /// Method to update a user
+        /// </summary>
+        /// <param name="entity">Parameter with user information to update</param>
         public async Task UpdateAsync(UserRequest entity)
         {
             UserValidation.UserUpdateValidate(entity);
             var userData = _mapper.Map<User>(entity);
             await _userRepository.UpdateAsync(userData);
-        }
+        } 
+        #endregion
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopFood.Domain.Variables
+﻿namespace ShopFood.Domain.Variables
 {
+    /// <summary>
+    /// Class to swagger  configuration
+    /// </summary>
     public static class Swagger
     {
         public static string SW_TITLE { get { return "Shop Food Service"; } }

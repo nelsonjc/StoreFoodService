@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmaci�n de Pedido</title>
+    <title>Confirmación de Pedido</title>
     <style>
         table {
             width: 100%;
@@ -21,12 +21,13 @@
             background-color: #f2f2f2;
         }
 
-        button {
+        .btnConfirm {
             padding: 10px 20px;
             background-color: #007bff;
-            color: #fff;
+            color: white;
             border: none;
             cursor: pointer;
+            text-decoration: none;            
         }
     </style>
 </head>
@@ -59,13 +60,7 @@
         </table>
 
         <p>¡Esperamos que disfrutes de tus productos!</p>
-        <button onclick="redirectConfirmation()">Confirmar Pedido</button>
+        <a class="btnConfirm" href="[LINK]" target="_blank">Confirmar Pedido</a>
     </div>
-
-    <script>
-        function redirectConfirmation() {
-            window.open('[LINK]', '_blank');
-        }
-    </script>
 </body>
 </html>

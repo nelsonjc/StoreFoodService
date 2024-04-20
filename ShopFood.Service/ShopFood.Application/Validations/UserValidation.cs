@@ -3,8 +3,16 @@ using Throw;
 
 namespace ShopFood.Application.Validations
 {
+    /// <summary>
+    /// Class to validate User
+    /// </summary>
     public static class UserValidation
     {
+        /// <summary>
+        /// Method to User Create Validate
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="Exception"></exception>
         public static void UserCreateValidate(UserRequest request)
         {
             request.Throw().IfNull(x => x);
@@ -21,6 +29,11 @@ namespace ShopFood.Application.Validations
                     .IfEquals(default(Guid));
         }
 
+        /// <summary>
+        /// Method to User Update Validate
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="Exception"></exception>
         public static void UserUpdateValidate(UserRequest request)
         {
             request.Throw().IfNull(x => x);

@@ -5,7 +5,7 @@ using ShopFood.Domain.Entities;
 
 namespace ShopFood.API.App_Start
 {
-    internal static class MapperConfig
+    public static class MapperConfig
     {
         /// <summary>
         /// Add Auto Mapper Configuration

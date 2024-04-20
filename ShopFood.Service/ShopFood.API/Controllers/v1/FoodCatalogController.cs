@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShopFood.Application.Implements;
 using ShopFood.Domain.DTOs.Requests;
 using ShopFood.Domain.DTOs.Results;
 using ShopFood.Domain.Interfaces.Application.Implements;
@@ -9,15 +8,24 @@ using System.Net;
 
 namespace ShopFood.API.Controllers.v1
 {
+    /// <summary>
+    /// Controller to Food Catalog
+    /// </summary>
     public class FoodCatalogController : BaseController
     {
+        #region Variables
         private readonly IFoodCatalogBL _foodCatalogBL;
 
+        #endregion
+
+        #region Ctor
         public FoodCatalogController(IFoodCatalogBL foodCatalogBL)
         {
             _foodCatalogBL = foodCatalogBL;
         }
+        #endregion
 
+        #region Controllers
         [HttpPost]
         [Route("Create")]
         [Authorize(Roles = "Administrador")]
@@ -64,9 +72,9 @@ namespace ShopFood.API.Controllers.v1
         [ProducesResponseType(typeof(HttpResponse<FoodCatalogDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(HttpResponse<FoodCatalogDto>), (int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType(typeof(HttpErrorResponse), (int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetById(Guid idUser)
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var result = await _foodCatalogBL.GetByIdAsync(idUser);
+            var result = await _foodCatalogBL.GetByIdAsync(id);
             if (result != null)
                 return await GetResponseAsync(HttpStatusCode.OK, ServiceMessages.OK, result);
             return await GetResponseAsync<HttpResponse<FoodCatalogDto>>(HttpStatusCode.Unauthorized, ServiceMessages.UNAUTHORIZED, null);
@@ -94,6 +102,7 @@ namespace ShopFood.API.Controllers.v1
         {
             await _foodCatalogBL.DeleteAsync(id);
             return await GetResponseAsync(HttpStatusCode.OK, ServiceMessages.OK, true);
-        }
+        } 
+        #endregion
     }
 }

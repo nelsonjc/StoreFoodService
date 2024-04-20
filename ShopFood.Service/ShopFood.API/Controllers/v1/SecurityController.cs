@@ -8,11 +8,17 @@ using System.Net;
 
 namespace ShopFood.API.Controllers.v1
 {
+    /// <summary>
+    /// Controller to security
+    /// </summary>
     public class SecurityController : BaseController
     {
+        #region Varibles
         private readonly ISecurityBL _securityBL;
-        #region Constructor
 
+        #endregion
+
+        #region Constructor
         public SecurityController(ISecurityBL securityBL)
         {
             _securityBL = securityBL;
@@ -20,7 +26,7 @@ namespace ShopFood.API.Controllers.v1
 
         #endregion Constructor
 
-        #region Public
+        #region Controllers
 
         [HttpPost]
         [AllowAnonymous]

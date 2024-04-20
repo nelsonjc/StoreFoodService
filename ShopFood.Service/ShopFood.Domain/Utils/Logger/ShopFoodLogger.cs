@@ -3,27 +3,17 @@ using ShopFood.Domain.Interfaces.Logger;
 
 namespace ShopFood.Domain.Utils.Logger
 {
-    public class ShopFoodLogger<T> : IShopFoodLogger<T> where T : class
+    /// <summary>
+    /// Class to logger information
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <remarks>
+    /// Constructor
+    /// </remarks>
+    /// <param name="logger"></param>
+    public class ShopFoodLogger<T>(ILogger<T> logger) : IShopFoodLogger<T> where T : class
     {
-        #region Properties
-
-        private readonly ILogger<T> _logger;
-
-        #endregion Properties
-
-
-        #region Constructor
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="logger"></param>
-        public ShopFoodLogger(ILogger<T> logger)
-        {
-            _logger = logger;
-        }
-
-        #endregion Constructor
+        private readonly ILogger<T> _logger = logger;
 
 
         #region Public
@@ -49,7 +39,7 @@ namespace ShopFood.Domain.Utils.Logger
             _logger.LogInformation(message);
             return Task.FromResult(true);
         }
-        #endregion Public
 
+        #endregion Public
     }
 }

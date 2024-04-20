@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ShopFood.Domain.Variables;
 using System.Text;
 
 namespace ShopFood.API.App_Start
@@ -35,10 +36,10 @@ namespace ShopFood.API.App_Start
         /// <returns></returns>
         internal static TokenValidationParameters GetTokenValidationParameters(IConfiguration configuration)
         {
-            var jwtSettings = configuration.GetSection("Jwt");
-            var secret = jwtSettings["Secret"];
-            var issuer = jwtSettings["Issuer"];
-            var audience = jwtSettings["Audience"];
+            var jwtSettings = configuration.GetSection(AppConfig.AppSetting_JWT_Section);
+            var secret = jwtSettings[AppConfig.AppSetting_JWT_Secret];
+            var issuer = jwtSettings[AppConfig.AppSetting_JWT_Issuer];
+            var audience = jwtSettings[AppConfig.AppSetting_JWT_Audience];
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret));
 
             return new TokenValidationParameters
